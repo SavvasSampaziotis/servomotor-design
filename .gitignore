@@ -1,0 +1,7 @@
+# Massive data from simulations. This files are generated for my own convinience and are just simulation results. 
+*.mat
+
+# Matlab autosave files
+*.asv
+
+*.rar
