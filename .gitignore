@@ -5,3 +5,7 @@
 *.asv
 
 *.rar
+
+# Docx temp files
+~$*.docx
+~*.tmp
