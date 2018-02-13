@@ -6,7 +6,8 @@ DATA_DIR = './sim_data/';
 Mech_Load_Time = 0;
 Mech_Load = 6;
 
-label = 'RAMP'
+label = 'RAMP';
+% label = STEP;
 
 %% Speed = Target = 50%
 targetPer = 50; % For Plotting Purposes only
