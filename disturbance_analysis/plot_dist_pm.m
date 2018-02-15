@@ -1,8 +1,11 @@
 
 % simData = load('sim_data/DIST_Induction_750_80.mat');
-simData = load('sim_data/DIST_Induction_750_30.mat');
+% simData = load('sim_data/DIST_Induction_750_30.mat');
+% simData = load('sim_data/DIST_Induction_1200_30.mat');
 
-N = length(simData.simOut.get('Speed_ref'));
+simData = load('sim_data/DIST_PM_Motor1400_30.mat');
+
+N = length(simData.simOut.get('speed_ref1'));
 n = 1:N;
 % n = (floor(N/7):N);
 
@@ -11,20 +14,23 @@ figure(1); clf;
 %% Plot Speed Signal Error
 subplot(1,2,1); 
 
-speed = simData.simOut.get('Speed_ref');
+speed = simData.simOut.get('speed_ref1');
 t = speed(:,1); 
 error = simData.Speed_Target-speed(:,2);
-plot(t(n), error(n),'LineWidth',2);
+% plot(t(n), error(n),'LineWidth',2);
+plot(t(n), speed(n,2),'LineWidth',2);
 legend('measured', 'Location' ,'best');
 title('Speed Error Response'); 
 xlabel('t [sec]'); ylabel('e(t) = n* - n')
 grid on;
+
 %% Plot Torque Signals
 subplot(1,2,2); hold on;
 torque = simData.simOut.get('Torque'); 
+torque_ref = simData.simOut.get('Torque_ref'); 
 t = torque(:,1);
-plot(t(n), torque(n,2));
-plot(t(n), torque(n,3), 'LineWidth',2);
+plot(t, torque(:,2));
+plot(t(1:10:end), torque_ref, 'LineWidth',2);
 plot([t(n(1)), simData.Mech_Load_Time([2,2]), simData.T], simData.Mech_Load([1,1,2,2]),'LineWidth',2);
 title('Torque Response');
 xlabel('t [sec]'); ylabel('[Nm]')
