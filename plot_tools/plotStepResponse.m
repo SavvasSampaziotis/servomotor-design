@@ -1,7 +1,7 @@
 function [ Ess, Overshoot, tr, ts ] = plotStepResponse( t, y, r )
 %PLOTSTEPRESPONSE Summary of this function goes here
 %   Detailed explanation goes here
-
+t_offset = 0.1;
 y = y - mod(10*y,1)/10; %Accuracy of 0.1 is enough for our application
 
 target = r(end);
@@ -43,16 +43,18 @@ end
 %% Absolute Settling Time
 PLOT_ABSOLUTE = false;
 % Quantize absolute error to 1-point decimal e.g. 13.200
-e = abs(target-y);
-% e = e - mod(10*e,1)/10;
-e_100 = e(e==0); % Error Signal Time Stamps where e==0
-if ~isempty(e_100)
-    ts_100 = t(e>0); ts_100 = ts_100(end);
-    PLOT_ABSOLUTE = (ts_100 ~= t(end));
-end
-
+% e = abs(target-y);
+% % e = e - mod(10*e,1)/10;
+% e_100 = e(e==0); % Error Signal Time Stamps where e==0
+% if ~isempty(e_100)
+%     ts_100 = t(e>0); ts_100 = ts_100(end);
+%     PLOT_ABSOLUTE = (ts_100 ~= t(end));
+% end
+tr = tr - t_offset;
+ts = ts - t_offset;
 if PLOT_ABSOLUTE
     stem(ts_100, y(t==ts_100), 'y--');
+    ts_100 = ts_100 - t_offset;
     legend('Response','Target', ...
         ['Overshoot:',num2str(Overshoot,'%.2f'),'%'],...
         ['Rise Time = ',num2str(tr,'%.2f'), 'sec'],...
